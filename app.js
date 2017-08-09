@@ -27,7 +27,6 @@ dotenv.load({ path: '.env' });
 /**
  * Controllers (route handlers).
  */
-const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const pinController = require('./controllers/pin');
 
@@ -113,7 +112,7 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 /**
  * Primary app routes.
  */
-app.get('/', homeController.index);
+app.get('/', pinController.getIndex);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
@@ -127,6 +126,8 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 app.get('/new', passportConfig.isAuthenticated, pinController.getNewPin);
+app.post('/new', passportConfig.isAuthenticated, pinController.postNewPin);
+app.get('/pins/:userid', passportConfig.isAuthenticated, pinController.getUserPins);
 
 
 /**

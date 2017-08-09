@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  .grid(data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }')
+    if pins.length
+      each pin in pins
+        .grid-item
+          img.pin-img(src=pin.image)
+          img.pinner-img(src=pin.pinner.profile.picture)
+          p= pin.description
+          .menu
+            i.fa.fa-times(aria-hidden='true')
+            i.fa.fa-heart(aria-hidden='true')

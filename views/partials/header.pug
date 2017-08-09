@@ -22,6 +22,6 @@
           else
             img(src=user.gravatar(60))
           li(class=(title == 'Pins') ? 'active' : undefined)
-            a(href='/my/pins') My Pins
+            a(href='/pins/' + user._id) My Pins
           li(class=(title == 'Logout') ? 'active' : undefined)
             a(href='/logout') Logout

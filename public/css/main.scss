@@ -9,11 +9,12 @@ html {
 body {
   padding-top: 60px;
   margin-bottom: 75px;
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgb(45, 45, 45);
 }
 
-h1, h2, h3, h4, h5, p, a, a:visited, a:hover, a:active {
+h1, h2, h3, h4, h5, p, a, a:visited, a:hover, a:active, label, i, ul, li {
   color: #fff;
+  font-family: 'Roboto', sans-serif;
 }
 
 footer {
@@ -39,8 +40,8 @@ textarea {
 // -------------------------
 
 .navbar-default {
-  background-color: rgba(0,0,0,0.1);
-  border-color: rgba(0,0,0,0.1);
+  background-color: rgb(30,30,30);
+  border-color: rgb(30,30,30);
 }
 
 .navbar-nav img {
@@ -79,7 +80,35 @@ textarea {
 .grid {
   .grid-item {
     background-color: rgba(0,0,0,0.1);
-    border-radius: 25px;
-    padding: 20px;
+    padding: 10px;
+    margin: 10px 0px;
+    width: 190px;
   }
+  .pin-img {
+    width: 170px;
+  }
+  .pinner-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    float: left;
+    margin: 5px 10px 0px 0px;
+  }
+  .menu {
+    float: right;
+    i {
+      background-color: rgba(0,0,0,0.2);
+      padding: 5px;
+      cursor: pointer;
+    }
+  }
+}
+
+// Form
+// -------------------------
+form {
+  background-color: rgba(0,0,0,0.1);
+  width: 33%;
+  position: relative;
+  left: 33%;
 }
