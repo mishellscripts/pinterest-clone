@@ -113,7 +113,7 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
  * Primary app routes.
  */
 app.get('/', pinController.getIndex);
-app.get('/login', userController.getLogin);
+app.post('/',  passportConfig.isAuthenticated, pinController.postNewPin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
 app.get('/forgot', userController.getForgot);
@@ -125,9 +125,8 @@ app.post('/signup', userController.postSignup);
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
-app.get('/new', passportConfig.isAuthenticated, pinController.getNewPin);
-app.post('/new', passportConfig.isAuthenticated, pinController.postNewPin);
-app.get('/pins/:userid', passportConfig.isAuthenticated, pinController.getUserPins);
+app.get('/pins/:userid', pinController.getUserPins);
+app.get('/delete/:pinid', passportConfig.isAuthenticated, pinController.getDeletePin);
 
 
 /**

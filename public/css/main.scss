@@ -12,9 +12,13 @@ body {
   background-color: rgb(45, 45, 45);
 }
 
-h1, h2, h3, h4, h5, p, a, a:visited, a:hover, a:active, label, i, ul, li {
+h1, h2, h3, h4, h5, p, a, a:visited, a:hover, a:active, label, i, ul, li, li a {
   color: #fff;
   font-family: 'Roboto', sans-serif;
+}
+
+a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
 }
 
 footer {
@@ -50,6 +54,35 @@ textarea {
   border-radius: 100%;
   float: left;
   margin: 10px 0px;
+}
+
+// Floating menu
+// -------------------------
+.floating-menu {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  z-index: 100;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  a, i {
+    color: #000;
+  }
+  .option {
+    background: #fff;
+    font-size: 2em;
+    padding: 5px;
+    margin-top: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+  }
+  .option:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    a, i, a:active {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
 }
 
 // Alerts
@@ -101,14 +134,22 @@ textarea {
       padding: 5px;
       cursor: pointer;
     }
+    i:hover {
+       transform: scale(1.4);
+    }
   }
 }
 
 // Form
 // -------------------------
 form {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0,0,0,0.5);
   width: 33%;
-  position: relative;
+  position: fixed;
   left: 33%;
+  top: 25%;
+  height: 50%;
+  z-index: 100;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }

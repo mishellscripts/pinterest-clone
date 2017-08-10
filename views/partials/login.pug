@@ -1,0 +1,21 @@
+form.form-horizontal(method='POST', action='/login', ng-show='showLoginForm', ng-init='showLoginForm = ' + !isLoggedIn)
+  h2.text-center Sign in
+  input(type='hidden', name='_csrf', value=_csrf)
+  .form-group
+    label.col-sm-3.control-label(for='email') Email
+    .col-sm-7
+      input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
+  .form-group
+    label.col-sm-3.control-label(for='password') Password
+    .col-sm-7
+      input.form-control(type='password', name='password', id='password', placeholder='Password', required)
+  .form-group
+    .col-sm-offset-3.col-sm-7
+      button.col-sm-3.btn.btn-primary(type='submit')
+        i.fa.fa-user
+        | Login   
+  .form-group
+    .col-sm-offset-3.col-sm-7
+      a.col-sm-3.btn.btn-primary(ng-href='/auth/twitter')
+        i.fa.fa-twitter
+        | Sign in with Twitter

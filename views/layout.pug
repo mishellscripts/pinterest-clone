@@ -1,5 +1,5 @@
 doctype html
-html
+html(ng-app='pinApp', ng-controller='PinController')
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
@@ -11,15 +11,19 @@ html
     link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
     link(href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet")
     link(rel='stylesheet', href='/css/main.css')
+  include partials/new
+  include partials/login
   body
     include partials/header
-
-    .container
+    .container(ng-init="updatePins(" + pins + ")")
       include partials/flash
       block content
-
-    include partials/footer
-
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+    .floating-menu.text-center
+      .option(ng-style='buttonStyle')
+        a(ng-href='#', ng-style='linkStyle', ng-click="clickAddPin(" + isLoggedIn +")") +
+      .option
+        a(ng-href='https://github.com/mishellscripts/pinterest-clone')
+          i.fa.fa-github.fa-align-center(aria-hidden='true')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js')
     script(src='/js/main.js')
     script(src='/js/lib/masonry.pkgd.min.js')

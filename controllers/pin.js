@@ -9,7 +9,8 @@ exports.getIndex = (req, res)=>{
   Pin.find({}, (err, pins)=>{
     res.render('pins/view', {
       title: 'Home',
-      pins: pins
+      pins: JSON.stringify(pins),
+      isLoggedIn: req.user != null
     });
   });
 };
@@ -21,10 +22,7 @@ exports.getIndex = (req, res)=>{
 exports.getUserPins = (req, res, next)=>{
   User.findById(req.params.userid, (err, user)=>{
     if (err) return next(err);
-    res.render('pins/view', {
-      title: 'Home',
-      pins: user.pins
-    });
+    res.send({pins: user.pins});
   });
 };
 
@@ -50,7 +48,19 @@ exports.postNewPin = (req, res, next)=>{
     if (err) return next(err);
     User.findByIdAndUpdate(req.user.id, {$push: {pins: pin}}, err=>{
        if (err) return next(err);
-      else res.redirect('/pins/' + req.user._id);
+       res.redirect('#');
     });
   });
 };
+
+/**
+ * GET /delete/:pinid
+ * Delete pin
+ */
+exports.getDeletePin = (req, res, next)=> {
+  Pin.findById(req.params.pinid, (err,pin)=>{
+    if (err) return next(err);
+    if (req.user._id == pin.pinner._id) pin.remove().exec();
+    res.redirect('/');
+  })
+}

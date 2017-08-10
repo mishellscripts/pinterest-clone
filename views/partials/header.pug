@@ -12,8 +12,6 @@
       ul.nav.navbar-nav
       ul.nav.navbar-nav.navbar-right
         if !user
-          li(class=(title == 'Login') ? 'active' : undefined)
-            a(href='/login') Login
           li(class=(title == 'Create Account') ? 'active' : undefined)
             a(href='/signup') Create Account
         else
@@ -22,6 +20,6 @@
           else
             img(src=user.gravatar(60))
           li(class=(title == 'Pins') ? 'active' : undefined)
-            a(href='/pins/' + user._id) My Pins
+            a(href='#', ng-click='updatePins(' + pins + ')') My Pins
           li(class=(title == 'Logout') ? 'active' : undefined)
             a(href='/logout') Logout

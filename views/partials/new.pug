@@ -1,0 +1,16 @@
+form.form-horizontal(method='POST', action='/', ng-show='showPinForm', ng-init='showPinForm = false')
+  h2.text-center New pin
+  input(type='hidden', name='_csrf', value=_csrf)
+  .form-group
+    label.col-sm-3.control-label(for='imageURL') Image URL
+    .col-sm-7
+      input.form-control(type='imageURL', name='imageURL', id='imageURL', placeholder='Image URL', required)
+  .form-group
+    label.col-sm-3.control-label(for='description') Description
+    .col-sm-7
+      input.form-control(type='description', name='description', id='description', placeholder='Description', required)
+  .form-group
+    .col-sm-offset-3.col-sm-7
+      button.col-sm-3.btn.btn-primary(type='submit', ng-submit='showPinForm = false')
+        i.fa.fa-user
+        | Add
