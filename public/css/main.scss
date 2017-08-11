@@ -12,14 +12,6 @@ body {
   background-color: rgb(45, 45, 45);
 }
 
-.blur {
-  filter:blur(3px);
-}
-
-.clickable {
-  cursor: pointer;
-}
-
 p, a, a:visited, a:hover, a:active, label, i, li {
   color: #000;
   font-family: 'Roboto', sans-serif;
@@ -45,8 +37,6 @@ footer {
   }
 }
 
-.ng-cloak { display: none !important; }
-
 input, label {
   display: block;
 }
@@ -64,13 +54,6 @@ button {
   font-size: 0.8em;
   left: 10%;
   margin-bottom: 10px;
-}
-
-// Input Fields
-// -------------------------
-
-textarea {
-  resize: vertical;
 }
 
 // Navbar
@@ -144,7 +127,7 @@ textarea {
     border-radius: 100%;
   }
   .option:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
     a, i, a:active {
       color: rgba(255, 255, 255, 0.5);
     }
@@ -156,6 +139,26 @@ textarea {
 
 .alert {
   margin-top: 20px;
+}
+
+// Classes to add w/ HTML/JS
+// -------------------------
+
+.blur {
+  filter:blur(3px);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.ng-cloak { 
+  display: none !important; 
+}
+
+.liked {
+  transform: scale(1.4);
+  color: #FF6347;
 }
 
 // Thumbnails
@@ -201,11 +204,6 @@ textarea {
        transform: scale(1.4);
     }
   }
-}
-
-.liked {
-  transform: scale(1.4);
-  color: #FF6347;
 }
 
 // Form

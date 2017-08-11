@@ -13,7 +13,7 @@
       ul.nav.navbar-nav.navbar-right.cannot-blur
         if !user
           li(class=(title == 'Create Account') ? 'active' : undefined)
-            a(href='/signup') Create Account
+            a.clickable(ng-click='showSignupForm = true; showLoginForm = false;') Create Account
         else
           .dropdown.cannot-blur
             a.dropdown-toggle.clickable(href='#', data-toggle='dropdown')

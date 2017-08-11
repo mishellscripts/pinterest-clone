@@ -59,20 +59,12 @@ io.on('connection', socket=> {
     var pin = new Pin(pin);
     pin.save(err=> {
       if (err) return err;
-      console.log('created');
-      /*Pin.find({}, (err, pins)=>{
-        socket.emit('getPins', pins);
-      });*/
     })
   });
 
   socket.on('removePin', pin=> {
     Pin.findByIdAndRemove(pin._id, err=> {
       if (err) return err;
-      console.log('removed');
-      /*Pin.find({}, (err, pins)=> {
-        socket.emit('getPins',  pins)
-      });*/
     });         
   });
 
@@ -90,12 +82,10 @@ io.on('connection', socket=> {
   });
 
   socket.on('incLike', data=> {
-    console.log('inc');
     Pin.findById(data.pin._id, (err, pin)=>{
       if (err) return err;
       pin.likes += 1;
       pin.likers.push(data.user._id);
-      console.log(pin.likers);
       pin.save(err=>{
         if (err) return err;
       });
@@ -103,13 +93,11 @@ io.on('connection', socket=> {
   });
 
   socket.on('decLike', data=> {
-    console.log('dec');
     Pin.findById(data.pin._id, (err, pin)=>{
       if (err) return err;
       pin.likes -= 1;
       const index = pin.likers.indexOf(data.user._id);
       pin.likers.splice(index, 1);
-      console.log(pin.likers);
       pin.save(err=>{
         if (err) return err;
       });
@@ -195,14 +183,7 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 app.get('/', pinController.getIndex);
 app.get('/login', userController.postLogin);
 app.get('/logout', userController.logout);
-app.get('/forgot', userController.getForgot);
-app.post('/forgot', userController.postForgot);
-app.get('/reset/:token', userController.getReset);
-app.post('/reset/:token', userController.postReset);
-app.get('/signup', userController.postSignup);
-app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
-app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
-app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
+app.post('/signup', userController.postSignup);
 
 /**
  * OAuth authentication routes. (Sign in)

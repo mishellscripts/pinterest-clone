@@ -5,16 +5,18 @@ const socket = io.connect('/');
   
   app.controller('PinController', ['$scope',
       ($scope)=> {
-        $scope.buttonStyle = {};
 
         socket.on('getPins', pins=> {
           $scope.pins = pins;
           $scope.$apply();
         });
   
+        /**
+         * Change blur of certain elements of page depending on if forms are visible.
+         * If forms are visible, blur rest of page. Else, remove blur.
+         */
         $scope.toggleBlur = ()=> {
-          console.log('blurring');
-          document.querySelectorAll('DIV:not(.cannot-blur)').forEach((div)=>{
+          document.querySelectorAll('DIV:not(.cannot-blur)').forEach(div=>{
             if ($scope.showPinForm || $scope.showLoginForm || $scope.showSignupForm)
               div.classList.add('blur');
             else 
@@ -22,9 +24,11 @@ const socket = io.connect('/');
           });
         };
 
+        /**
+         * Display create pin form upon click of create button.
+         * Change styling of the floating menu button when clicked.
+         */
         $scope.clickAddPin = isLoggedIn=>{
-          console.log(isLoggedIn);
-
           if (isLoggedIn) {
             $scope.showPinForm = !$scope.showPinForm;
             $scope.buttonStyle = $scope.showPinForm ? {
@@ -38,18 +42,30 @@ const socket = io.connect('/');
           }
         };
 
+        /**
+         * Get pins created by current user by communicating with server.
+         */
         $scope.getCurrentUserPins = ()=>{
           socket.emit('getPinsByUser', userInfo._id);
         };
 
+        /**
+         * Get pins created by given user (parameter) by communicating with server.
+         */
         $scope.getPinsByUserID = userID=> {
           socket.emit('getPinsByUser', userID);
         }
 
+        /**
+         * Get all pins in database by communicating with server.
+         */
         $scope.getAllPins = ()=> {
           socket.emit('getAllPins');
         }
 
+        /**
+         * Add pin to view and to model (server db).
+         */
         $scope.addPin = ()=> {
           const pin = {
             image: $scope.imageURL,
@@ -61,31 +77,47 @@ const socket = io.connect('/');
           socket.emit('createPin', pin);
         };
 
+        /**
+         * Remove pin from view and from model (server db).
+         */
         $scope.removePin = pin=> {
           const index = $scope.pins.indexOf(pin);
           $scope.pins.splice(index, 1);
           socket.emit('removePin', pin);
         };
 
+        /**
+         * Checks if pin was liked by user.
+         * Changes styling of like heart button if liked by user.
+         */
         $scope.checkIfUserLiked = pin=> {
-          if (pin.likers.indexOf(userInfo._id) >= 0) 
+          if (typeof userInfo != 'undefined' && pin.likers.indexOf(userInfo._id) >= 0)
             pin.liked = true;
         };
 
+        /**
+         * Toggle like button when clicked on.
+         * Add/remove 1 like from view and update model (server db).
+         */
         $scope.toggleLike = pin=> {
-          if (!pin.liked) {
-            pin.likes += 1;
-            pin.liked = true;
-            socket.emit('incLike', {pin: pin, user: userInfo});
-          } else {
-            pin.likes -= 1;
-            pin.liked = false;
-            socket.emit('decLike', {pin: pin, user: userInfo});
+          if (typeof userInfo != 'undefined') {
+            if (!pin.liked) {
+              pin.likes += 1;
+              pin.liked = true;
+              socket.emit('incLike', {pin: pin, user: userInfo});
+            } else {
+              pin.likes -= 1;
+              pin.liked = false;
+              socket.emit('decLike', {pin: pin, user: userInfo});
+            }
           }
         };
       }
   ]);
 
+  /**
+   * Ensures placeholder image if image is not found (err 404).
+   */
   app.directive('errSrc', function() {
     return {
       link: function(scope, element, attrs) {
