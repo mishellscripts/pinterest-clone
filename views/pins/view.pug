@@ -2,11 +2,11 @@ extends ../layout
 
 block content
   .grid.ng-cloak(masonry='', column-width='220', load-images='true')
-    .masonry-brick(ng-repeat='pin in pins')
+    .masonry-brick(ng-repeat='pin in pins', ng-init='checkIfUserLiked(pin)')
       img.pin-img(ng-src="{{pin.image}}")
       hr
       if isUsers
-        img.pinner-img(ng-src="{{pin.pinner.profile.picture}}")
+        img.pinner-img(check-image='', ng-src="{{pin.pinner.profile.picture}}")
       else
         a.clickable(ng-click='getPinsByUserID(pin.pinner._id)')
           img.pinner-img(ng-src="{{pin.pinner.profile.picture}}")
@@ -15,5 +15,5 @@ block content
         if isUsers
           a.clickable(ng-click='removePin(pin)')
             i.fa.fa-times(aria-hidden='true')
-        i.fa.fa-heart.clickable(aria-hidden='true')
+        i.fa.fa-heart.clickable(aria-hidden='true', ng-click='toggleLike(pin)', ng-class="{'liked': pin.liked}")
         | {{pin.likes}} likes

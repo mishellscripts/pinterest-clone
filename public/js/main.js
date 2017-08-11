@@ -59,13 +59,41 @@ const socket = io.connect('/');
           };
           $scope.pins.push(pin);
           socket.emit('createPin', pin);
-        }
+        };
 
-         $scope.removePin = pin=> {
+        $scope.removePin = pin=> {
           const index = $scope.pins.indexOf(pin);
           $scope.pins.splice(index, 1);
-          socket.emit('removePin', pin)
-        }
+          socket.emit('removePin', pin);
+        };
+
+        $scope.checkIfUserLiked = pin=> {
+          if (pin.likers.indexOf(userInfo._id) >= 0) 
+            pin.liked = true;
+        };
+
+        $scope.toggleLike = pin=> {
+          if (!pin.liked) {
+            pin.likes += 1;
+            pin.liked = true;
+            socket.emit('incLike', {pin: pin, user: userInfo});
+          } else {
+            pin.likes -= 1;
+            pin.liked = false;
+            socket.emit('decLike', {pin: pin, user: userInfo});
+          }
+        };
       }
   ]);
+
+  app.directive('checkImage', ()=>{
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+        element.on('error', ()=> {
+          element.attr('src', 'http://rationalwiki.org/w/images/f/f5/Error_icon.svg'); // set default image
+        });
+      }
+    };
+  });
 })();

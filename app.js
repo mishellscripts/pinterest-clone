@@ -89,6 +89,33 @@ io.on('connection', socket=> {
     });
   });
 
+  socket.on('incLike', data=> {
+    console.log('inc');
+    Pin.findById(data.pin._id, (err, pin)=>{
+      if (err) return err;
+      pin.likes += 1;
+      pin.likers.push(data.user._id);
+      console.log(pin.likers);
+      pin.save(err=>{
+        if (err) return err;
+      });
+    });
+  });
+
+  socket.on('decLike', data=> {
+    console.log('dec');
+    Pin.findById(data.pin._id, (err, pin)=>{
+      if (err) return err;
+      pin.likes -= 1;
+      const index = pin.likers.indexOf(data.user._id);
+      pin.likers.splice(index, 1);
+      console.log(pin.likers);
+      pin.save(err=>{
+        if (err) return err;
+      });
+    });
+  });
+
   Pin.find({}, (err, pins)=> {
     socket.emit('getPins', pins);
   });
