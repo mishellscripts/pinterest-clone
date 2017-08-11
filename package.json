@@ -38,6 +38,7 @@
     "passport-oauth": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "pug": "^2.0.0-beta6",
+    "socket.io": "^2.0.3",
     "validator": "^7.0.0"
   },
   "devDependencies": {

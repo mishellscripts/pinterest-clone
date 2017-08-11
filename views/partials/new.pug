@@ -1,4 +1,4 @@
-form.form-horizontal.cannot-blur.col-xs-4.col-xs-offset-4(ng-show='showPinForm', ng-init='showPinForm = false', ng-submit='showPinForm = false; addPin(); toggleBlur()')
+form.form-horizontal.cannot-blur(ng-show='showPinForm', ng-init='showPinForm = false', ng-submit='showPinForm = false; addPin(); toggleBlur()')
   h2.text-center.form-title New pin
   input(type='hidden', name='_csrf', value=_csrf)
   .form-group.cannot-blur

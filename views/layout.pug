@@ -12,9 +12,9 @@ html(ng-app='pinApp', ng-controller='PinController')
     link(href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet")
     link(href="https://fonts.googleapis.com/css?family=Raleway:600" rel="stylesheet")
     link(rel='stylesheet', href='/css/main.css')
-  include partials/new
   include partials/login
   include partials/header
+  include partials/new
   body.ng-cloak
     .container(ng-init="toggleBlur()")
       include partials/flash
@@ -25,6 +25,7 @@ html(ng-app='pinApp', ng-controller='PinController')
       .option.cannot-blur
         a(ng-href='https://github.com/mishellscripts/pinterest-clone')
           i.fa.fa-github.fa-align-center(aria-hidden='true')
+    script(src='/socket.io/socket.io.js')
     script(src='/js/lib/jquery-3.1.1.min.js')
     script(src='/js/lib/bootstrap.min.js')
     script(src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.1.2/masonry.pkgd.min.js")

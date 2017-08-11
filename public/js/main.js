@@ -1,10 +1,16 @@
+const socket = io.connect('/');
+
 (()=> {
   let app = angular.module('pinApp', ['wu.masonry']);
   
   app.controller('PinController', ['$scope',
       ($scope)=> {
         $scope.buttonStyle = {};
-        $scope.pins = [];
+
+        socket.on('getPins', pins=> {
+          $scope.pins = pins;
+          $scope.$apply();
+        });
   
         $scope.toggleBlur = ()=> {
           console.log('happens');
@@ -38,17 +44,20 @@
         }
 
         $scope.addPin = ()=> {
-          $scope.pins.push({
+          const pin = {
             image: $scope.imageURL,
             pinner: userInfo,
             description: $scope.description,
             likes: 0
-          });
+          };
+          $scope.pins.push(pin);
+          socket.emit('createPin', pin);
         }
 
-         $scope.removePin = pin=> { 
+         $scope.removePin = pin=> {
           const index = $scope.pins.indexOf(pin);
           $scope.pins.splice(index, 1);
+          socket.emit('removePin', pin)
         }
       }
   ]);

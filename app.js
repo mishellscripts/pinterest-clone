@@ -25,6 +25,12 @@ const sass = require('node-sass-middleware');
 dotenv.load({ path: '.env' });
 
 /**
+ * Models
+ */
+const Pin = require('./models/Pin');
+const User = require('./models/User');
+
+/**
  * Controllers (route handlers).
  */
 const userController = require('./controllers/user');
@@ -39,6 +45,41 @@ const passportConfig = require('./config/passport');
  * Create Express server.
  */
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+/**
+ * Server settings
+ */
+
+io.on('connection', socket=> {
+  console.log('connected');
+
+  socket.on('createPin', pin=> {
+    var pin = new Pin(pin);
+    pin.save(err=> {
+      if (err) return err;
+      console.log('created');
+      Pin.find({}, (err, pins)=>{
+        socket.emit('getPins', pins);
+      });
+    })
+  });
+
+  socket.on('removePin', pin=> {
+    Pin.findByIdAndRemove(pin._id, err=> {
+      if (err) return err;
+      console.log('removed');
+      Pin.find({}, (err, pins)=> {
+        socket.emit('getPins',  pins)
+      });
+    });         
+  });
+
+  Pin.find({}, (err, pins)=> {
+    socket.emit('getPins', pins);
+  });
+});
 
 /**
  * Connect to MongoDB.
@@ -57,7 +98,6 @@ mongoose.connection.on('error', (err) => {
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.use(expressStatusMonitor({})); 
 app.use(compression());
 app.use(sass({
   src: path.join(__dirname, 'public'),
@@ -144,6 +184,6 @@ app.use(errorHandler());
 /**
  * Start Express server.
  */
-app.listen(app.get('port'));
+server.listen(app.get('port'));
 
 module.exports = app;
