@@ -7,8 +7,9 @@ const User = require('../models/User');
  */
 exports.getIndex = (req, res)=>{
   Pin.find({}, (err, pins)=>{
+    if (err) return next(err);
     res.render('pins/view', {
-      title: 'Home',
+      isHomeView: true,
       pins: JSON.stringify(pins),
       isLoggedIn: req.user != null
     });
@@ -22,33 +23,8 @@ exports.getIndex = (req, res)=>{
 exports.getUserPins = (req, res, next)=>{
   User.findById(req.params.userid, (err, user)=>{
     if (err) return next(err);
-    res.send({pins: user.pins});
-  });
-};
-
-/**
- * GET /new
- * New pin page
- */
-exports.getNewPin = (req, res)=>{
-  res.render('pins/new');
-};
-
-/**
- * POST /new
- * Add new pin
- */
-exports.postNewPin = (req, res, next)=>{
-  var pin = new Pin({
-		image: req.body.imageURL,
-    pinner: req.user,
-    description: req.body.description
-  });
-  pin.save(err=>{
-    if (err) return next(err);
-    User.findByIdAndUpdate(req.user.id, {$push: {pins: pin}}, err=>{
-       if (err) return next(err);
-       res.redirect('#');
+    res.render('pins/view', {
+      isLoggedIn: req.user != null
     });
   });
 };
@@ -58,9 +34,10 @@ exports.postNewPin = (req, res, next)=>{
  * Delete pin
  */
 exports.getDeletePin = (req, res, next)=> {
+  console.log('deleting');
   Pin.findById(req.params.pinid, (err,pin)=>{
     if (err) return next(err);
     if (req.user._id == pin.pinner._id) pin.remove().exec();
-    res.redirect('/');
+    res.redirect('/pins/' + req.user._id);
   })
 }

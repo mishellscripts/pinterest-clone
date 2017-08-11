@@ -1,25 +1,24 @@
 (()=> {
-  let app = angular.module('pinApp', []);
-
-  app.directive('errSrc', function() {
-    return {
-      link: function(scope, element, attrs) {
-        element.bind('error', function() {
-          if (attrs.src != attrs.errSrc) {
-            attrs.$set('src', attrs.errSrc);
-          }
-        });
-      }
-    }
-  });
+  let app = angular.module('pinApp', ['wu.masonry']);
   
   app.controller('PinController', ['$scope',
       ($scope)=> {
         $scope.buttonStyle = {};
         $scope.pins = [];
+  
+        $scope.toggleBlur = ()=> {
+          console.log('happens');
+          document.querySelectorAll('DIV:not(.cannot-blur)').forEach((div)=>{
+            if ($scope.showPinForm || $scope.showLoginForm)
+              div.classList.add('blur');
+            else 
+              div.classList.remove('blur');
+          });
+        };
 
         $scope.clickAddPin = isLoggedIn=>{
           console.log(isLoggedIn);
+
           if (isLoggedIn) {
             $scope.showPinForm = !$scope.showPinForm;
             $scope.buttonStyle = $scope.showPinForm ? {
@@ -36,6 +35,20 @@
         $scope.updatePins = pins=>{
           console.log('updating');
           $scope.pins = pins;
+        }
+
+        $scope.addPin = ()=> {
+          $scope.pins.push({
+            image: $scope.imageURL,
+            pinner: userInfo,
+            description: $scope.description,
+            likes: 0
+          });
+        }
+
+         $scope.removePin = pin=> { 
+          const index = $scope.pins.indexOf(pin);
+          $scope.pins.splice(index, 1);
         }
       }
   ]);

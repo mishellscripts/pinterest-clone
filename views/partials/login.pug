@@ -1,21 +1,22 @@
-form.form-horizontal(method='POST', action='/login', ng-show='showLoginForm', ng-init='showLoginForm = ' + !isLoggedIn)
-  h2.text-center Sign in
+form.form-horizontal.cannot-blur.col-xs-4.col-xs-offset-4(method='POST', action='/login', ng-show='showLoginForm', ng-init='showLoginForm = ' + !isLoggedIn)
+  h2.text-center.form-title Sign In
   input(type='hidden', name='_csrf', value=_csrf)
-  .form-group
-    label.col-sm-3.control-label(for='email') Email
-    .col-sm-7
+  .form-group.cannot-blur
+    .col-sm-10.col-sm-offset-1.cannot-blur
+      label(for='email') Email
       input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
-  .form-group
-    label.col-sm-3.control-label(for='password') Password
-    .col-sm-7
+  .form-group.cannot-blur
+    .col-sm-10.col-sm-offset-1.cannot-blur
+      label(for='password') Password
       input.form-control(type='password', name='password', id='password', placeholder='Password', required)
-  .form-group
-    .col-sm-offset-3.col-sm-7
-      button.col-sm-3.btn.btn-primary(type='submit')
-        i.fa.fa-user
-        | Login   
-  .form-group
-    .col-sm-offset-3.col-sm-7
-      a.col-sm-3.btn.btn-primary(ng-href='/auth/twitter')
-        i.fa.fa-twitter
-        | Sign in with Twitter
+  .form-group.cannot-blur(style='margin-top: 20px;')
+    .col-sm-10.col-sm-offset-1.cannot-blur
+      button(type='submit')
+        | Login
+      a(ng-href='/auth/twitter')
+        button(type='button')
+          i.fa.fa-twitter
+          | Login with Twitter
+      a(ng-href='/signup', ng-click='showLoginForm = false')    
+        button(type='button')
+          | Sign Up

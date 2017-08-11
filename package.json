@@ -14,6 +14,7 @@
     "eslint": "eslint **/*.js"
   },
   "dependencies": {
+    "angular-masonry": "^0.17.0",
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.4.7",
     "body-parser": "^1.15.2",

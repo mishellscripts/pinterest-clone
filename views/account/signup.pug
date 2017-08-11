@@ -1,24 +1,23 @@
 extends ../layout
 
 block content
-  .page-header
-    h3 Sign up
-  form.form-horizontal(id='signup-form', method='POST')
+  form.form-horizontal.cannot-blur.col-xs-4.col-xs-offset-4(method='POST', action='/signup')
+    h2.text-center.form-title Sign Up
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
-      label.col-sm-3.control-label(for='email') Email
-      .col-sm-7
+      .col-sm-10.col-sm-offset-1
+        label(for='email') Email
         input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
     .form-group
-      label.col-sm-3.control-label(for='password') Password
-      .col-sm-7
+      .col-sm-10.col-sm-offset-1
+        label(for='password') Password
         input.form-control(type='password', name='password', id='password', placeholder='Password', required)
     .form-group
-      label.col-sm-3.control-label(for='confirmPassword') Confirm Password
-      .col-sm-7
+      .col-sm-10.col-sm-offset-1
+        label(for='confirmPassword') Confirm Password
         input.form-control(type='password', name='confirmPassword', id='confirmPassword', placeholder='Confirm Password', required)
-    .form-group
-      .col-sm-offset-3.col-sm-7
-        button.btn.btn-success(type='submit')
+    .form-group(style='margin-top: 20px;')
+      .col-sm-10.col-sm-offset-1
+        button(type='submit')
           i.fa.fa-user-plus
           | Signup

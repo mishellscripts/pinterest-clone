@@ -1,25 +1,29 @@
-.navbar.navbar-default.navbar-fixed-top
-  .container
-    .navbar-header
+.navbar.navbar-default.navbar-fixed-top.cannot-blur
+  .container.cannot-blur
+    .navbar-header.cannot-blur
       button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
         span.sr-only Toggle navigation
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(href='/')
-        i.fa.fa-thumb-tack(aria-hidden='true')
-    .collapse.navbar-collapse
-      ul.nav.navbar-nav
-      ul.nav.navbar-nav.navbar-right
+      a.navbar-brand.cannot-blur(ng-href='/')
+        i.fa.fa-thumb-tack.cannot-blur(aria-hidden='true')
+    .collapse.navbar-collapse.cannot-blur
+      ul.nav.navbar-nav.cannot-blur
+      ul.nav.navbar-nav.navbar-right.cannot-blur
         if !user
           li(class=(title == 'Create Account') ? 'active' : undefined)
             a(href='/signup') Create Account
         else
-          if user.profile.picture
-            img(src=user.profile.picture)
-          else
-            img(src=user.gravatar(60))
-          li(class=(title == 'Pins') ? 'active' : undefined)
-            a(href='#', ng-click='updatePins(' + pins + ')') My Pins
-          li(class=(title == 'Logout') ? 'active' : undefined)
-            a(href='/logout') Logout
+          .dropdown.cannot-blur
+            a.dropdown-toggle.clickable(href='#', data-toggle='dropdown')
+              if user.profile.picture
+                img.cannot-blur(src=user.profile.picture)
+              else
+                img.cannot-blur(src=user.gravatar(60))
+            .dropdown-menu.clickable.cannot-blur
+              li(class=(title == 'Pins') ? 'active' : undefined)
+                a.dropdown-item(ng-href='/pins/' + user.id) My Pins
+              .dropdown-divider
+              li(class=(title == 'Logout') ? 'active' : undefined)
+                a.dropdown-item(href='/logout') Logout
