@@ -3,7 +3,7 @@ extends ../layout
 block content
   .grid.ng-cloak(masonry='', column-width='220', load-images='true')
     .masonry-brick(ng-repeat='pin in pins', ng-init='checkIfUserLiked(pin)')
-      img.pin-img(ng-src="{{pin.image}}")
+      img.pin-img(ng-src="{{pin.image}}", err-src='https://www.kaytee.com/areas/cgpbootstrapui/img/no-image.jpg')
       hr
       if isUsers
         img.pinner-img(check-image='', ng-src="{{pin.pinner.profile.picture}}")

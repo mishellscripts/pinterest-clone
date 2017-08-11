@@ -86,14 +86,15 @@ const socket = io.connect('/');
       }
   ]);
 
-  app.directive('checkImage', ()=>{
+  app.directive('errSrc', function() {
     return {
-      restrict: 'A',
       link: function(scope, element, attrs) {
-        element.on('error', ()=> {
-          element.attr('src', 'http://rationalwiki.org/w/images/f/f5/Error_icon.svg'); // set default image
+        element.bind('error', function() {
+          if (attrs.src != attrs.errSrc) {
+            attrs.$set('src', attrs.errSrc);
+          }
         });
       }
-    };
+    }
   });
 })();
