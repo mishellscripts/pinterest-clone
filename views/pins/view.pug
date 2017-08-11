@@ -1,15 +1,18 @@
 extends ../layout
 
 block content
-  .grid.ng-cloak(masonry='', column-width='200', load-images='true')
+  .grid.ng-cloak(masonry='', column-width='220', load-images='true')
     .masonry-brick(ng-repeat='pin in pins')
       img.pin-img(ng-src="{{pin.image}}")
       hr
-      a(href="/pins/{{pin.pinner._id}}")
+      if isUsers
         img.pinner-img(ng-src="{{pin.pinner.profile.picture}}")
+      else
+        a.clickable(ng-click='getPinsByUserID(pin.pinner._id)')
+          img.pinner-img(ng-src="{{pin.pinner.profile.picture}}")
       p {{pin.description}}
       .menu
-        if !isHomeView
+        if isUsers
           a.clickable(ng-click='removePin(pin)')
             i.fa.fa-times(aria-hidden='true')
         i.fa.fa-heart.clickable(aria-hidden='true')

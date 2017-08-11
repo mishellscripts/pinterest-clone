@@ -13,11 +13,11 @@ html(ng-app='pinApp', ng-controller='PinController')
     link(href="https://fonts.googleapis.com/css?family=Raleway:600" rel="stylesheet")
     link(rel='stylesheet', href='/css/main.css')
   include partials/login
+  include partials/signup
   include partials/header
   include partials/new
   body.ng-cloak
     .container(ng-init="toggleBlur()")
-      include partials/flash
       block content
     .floating-menu.text-center.cannot-blur
       .option.cannot-blur.clickable(ng-style='buttonStyle', ng-click="clickAddPin(" + isLoggedIn +"); toggleBlur()")

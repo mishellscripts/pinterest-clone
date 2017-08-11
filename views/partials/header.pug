@@ -6,7 +6,7 @@
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand.cannot-blur(ng-href='/')
+      a.navbar-brand.cannot-blur.clickable(ng-click='getAllPins()')
         i.fa.fa-thumb-tack.cannot-blur(aria-hidden='true')
     .collapse.navbar-collapse.cannot-blur
       ul.nav.navbar-nav.cannot-blur
@@ -23,7 +23,7 @@
                 img.cannot-blur(src=user.gravatar(60))
             .dropdown-menu.clickable.cannot-blur
               li(class=(title == 'Pins') ? 'active' : undefined)
-                a.dropdown-item(ng-href='/pins/' + user.id) My Pins
+                a.dropdown-item(ng-click='getCurrentUserPins()') My Pins
               .dropdown-divider
               li(class=(title == 'Logout') ? 'active' : undefined)
                 a.dropdown-item(href='/logout') Logout

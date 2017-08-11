@@ -1,6 +1,5 @@
-form.form-horizontal.cannot-blur(action='/login', ng-show='showLoginForm', ng-init='showLoginForm = ' + !isLoggedIn)
-  h2.text-center.form-title Sign in to view
-  include ./flash
+form.form-horizontal.cannot-blur(method='GET', action='/signup', ng-show='showSignupForm', ng-init='showSignupForm = false', ng-submit='showSignupForm = false; toggleBlur()')
+  h2.text-center.form-title Sign Up
   input(type='hidden', name='_csrf', value=_csrf)
   .form-group.cannot-blur
     .col-sm-10.col-sm-offset-1.cannot-blur
@@ -10,13 +9,8 @@ form.form-horizontal.cannot-blur(action='/login', ng-show='showLoginForm', ng-in
     .col-sm-10.col-sm-offset-1.cannot-blur
       label(for='password') Password
       input.form-control(type='password', name='password', id='password', placeholder='Password', required)
-  .form-group.cannot-blur(style='margin-top: 20px;')
+  .form-group(style='margin-top: 20px;').cannot-blur
     .col-sm-10.col-sm-offset-1.cannot-blur
-      button(type='submit')
-        | Login
-      a(ng-href='/auth/twitter')
-        button(type='button')
-          i.fa.fa-twitter
-          | Login with Twitter
-      button(type='button', ng-click='showSignupForm = true; showLoginForm = false;')
-        | Sign Up
+      button(type='submit', ng-click='showSignupForm = false;')
+        i.fa.fa-user-plus
+        | Signup

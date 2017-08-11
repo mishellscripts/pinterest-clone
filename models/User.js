@@ -14,9 +14,7 @@ const userSchema = new mongoose.Schema({
   profile: {
     name: String,
     picture: String
-  },
-
-  pins: Array
+  }
 }, { timestamps: true });
 
 /**

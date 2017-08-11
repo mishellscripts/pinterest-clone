@@ -13,9 +13,9 @@ const socket = io.connect('/');
         });
   
         $scope.toggleBlur = ()=> {
-          console.log('happens');
+          console.log('blurring');
           document.querySelectorAll('DIV:not(.cannot-blur)').forEach((div)=>{
-            if ($scope.showPinForm || $scope.showLoginForm)
+            if ($scope.showPinForm || $scope.showLoginForm || $scope.showSignupForm)
               div.classList.add('blur');
             else 
               div.classList.remove('blur');
@@ -38,9 +38,16 @@ const socket = io.connect('/');
           }
         };
 
-        $scope.updatePins = pins=>{
-          console.log('updating');
-          $scope.pins = pins;
+        $scope.getCurrentUserPins = ()=>{
+          socket.emit('getPinsByUser', userInfo._id);
+        };
+
+        $scope.getPinsByUserID = userID=> {
+          socket.emit('getPinsByUser', userID);
+        }
+
+        $scope.getAllPins = ()=> {
+          socket.emit('getAllPins');
         }
 
         $scope.addPin = ()=> {

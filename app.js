@@ -60,9 +60,9 @@ io.on('connection', socket=> {
     pin.save(err=> {
       if (err) return err;
       console.log('created');
-      Pin.find({}, (err, pins)=>{
+      /*Pin.find({}, (err, pins)=>{
         socket.emit('getPins', pins);
-      });
+      });*/
     })
   });
 
@@ -70,10 +70,23 @@ io.on('connection', socket=> {
     Pin.findByIdAndRemove(pin._id, err=> {
       if (err) return err;
       console.log('removed');
-      Pin.find({}, (err, pins)=> {
+      /*Pin.find({}, (err, pins)=> {
         socket.emit('getPins',  pins)
-      });
+      });*/
     });         
+  });
+
+  socket.on('getPinsByUser', userID=> {
+    Pin.find({'pinner._id': userID}, (err, pins)=> {
+      if (err) return err;
+      socket.emit('getPins', pins);
+    });
+  })
+
+  socket.on('getAllPins', ()=>{
+    Pin.find({}, (err, pins)=> {
+      socket.emit('getPins', pins);
+    });
   });
 
   Pin.find({}, (err, pins)=> {
@@ -153,20 +166,16 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
  * Primary app routes.
  */
 app.get('/', pinController.getIndex);
-app.post('/login', userController.postLogin);
+app.get('/login', userController.postLogin);
 app.get('/logout', userController.logout);
 app.get('/forgot', userController.getForgot);
 app.post('/forgot', userController.postForgot);
 app.get('/reset/:token', userController.getReset);
 app.post('/reset/:token', userController.postReset);
-app.get('/signup', userController.getSignup);
-app.post('/signup', userController.postSignup);
+app.get('/signup', userController.postSignup);
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
-app.get('/pins/:userid', pinController.getUserPins);
-app.get('/delete/:pinid', passportConfig.isAuthenticated, pinController.getDeletePin);
-
 
 /**
  * OAuth authentication routes. (Sign in)
